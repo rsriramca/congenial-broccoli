@@ -1,0 +1,356 @@
+{
+ "ts": "2026-10-17T17:54:33Z",
+ "code_sha256": "5afbee66355edddb26fa61442120fe7c74ec79ea9b7b277d5ebb29816efd0b6c",
+ "code_files": {
+  "mis_engine.py": "bba7db8017b221661b4f7b582e5c009d4a7d92267b76e506ae131d76a28371bd",
+  "run_mis.py": "e18b5e026b28fdb93d66c8dbf5a50e68b9091c9811b9b5da9a1fb4a29e1ab101"
+ },
+ "fixture": false,
+ "total": 68,
+ "passed": 68,
+ "all_passed": true,
+ "results": [
+  {
+   "test": "S1 baseline run on the original dataset",
+   "passed": true,
+   "evidence": "status=READY_FOR_APPROVAL; warnings=2; gates 10/10"
+  },
+  {
+   "test": "S2 approval refused while warnings unacknowledged",
+   "passed": true,
+   "evidence": "refused: run has warnings; review them and re-run approve with --ack-warnings:\n  - O3 Reg"
+  },
+  {
+   "test": "S3 approval refused without approver name",
+   "passed": true,
+   "evidence": "--by <approver name> is required"
+  },
+  {
+   "test": "S4 audit-log edit detected, approval refused",
+   "passed": true,
+   "evidence": "audit log integrity check failed: content altered at line 2"
+  },
+  {
+   "test": "S5 candidate file edit detected, approval refused",
+   "passed": true,
+   "evidence": "candidate file CFO_Monthly_Sales_MIS.xlsx changed since the run (hash mismatch)"
+  },
+  {
+   "test": "S6 approval with acknowledgement publishes and writes APPROVAL.json",
+   "passed": true,
+   "evidence": "cratchpad/stroot2/published/2026-09/20261017-174734_46de2957"
+  },
+  {
+   "test": "F: duplicate Invoice_ID -> BLOCKED with specific control",
+   "passed": true,
+   "evidence": "status=BLOCKED; detects 'Duplicate Invoice_ID': True; no candidate folder: True"
+  },
+  {
+   "test": "F: duplicate Invoice_ID -> approval refused",
+   "passed": true,
+   "evidence": "run status is BLOCKED; only READY_FOR_APPROVAL runs can be approved"
+  },
+  {
+   "test": "F: unmatched Product_ID -> BLOCKED with specific control",
+   "passed": true,
+   "evidence": "status=BLOCKED; detects 'Unmatched Product_ID': True; no candidate folder: True"
+  },
+  {
+   "test": "F: unmatched Product_ID -> approval refused",
+   "passed": true,
+   "evidence": "run status is BLOCKED; only READY_FOR_APPROVAL runs can be approved"
+  },
+  {
+   "test": "F: unmatched Customer_ID -> BLOCKED with specific control",
+   "passed": true,
+   "evidence": "status=BLOCKED; detects 'Unmatched Customer_ID': True; no candidate folder: True"
+  },
+  {
+   "test": "F: unmatched Customer_ID -> approval refused",
+   "passed": true,
+   "evidence": "run status is BLOCKED; only READY_FOR_APPROVAL runs can be approved"
+  },
+  {
+   "test": "F: revenue off by INR 500 -> BLOCKED with specific control",
+   "passed": true,
+   "evidence": "status=BLOCKED; detects 'Net_Revenue <> Units': True; no candidate folder: True"
+  },
+  {
+   "test": "F: revenue off by INR 500 -> approval refused",
+   "passed": true,
+   "evidence": "run status is BLOCKED; only READY_FOR_APPROVAL runs can be approved"
+  },
+  {
+   "test": "F: COGS off by INR 250 -> BLOCKED with specific control",
+   "passed": true,
+   "evidence": "status=BLOCKED; detects 'COGS <> Units': True; no candidate folder: True"
+  },
+  {
+   "test": "F: COGS off by INR 250 -> approval refused",
+   "passed": true,
+   "evidence": "run status is BLOCKED; only READY_FOR_APPROVAL runs can be approved"
+  },
+  {
+   "test": "F: gross profit off by INR 100 -> BLOCKED with specific control",
+   "passed": true,
+   "evidence": "status=BLOCKED; detects 'Gross_Profit <>': True; no candidate folder: True"
+  },
+  {
+   "test": "F: gross profit off by INR 100 -> approval refused",
+   "passed": true,
+   "evidence": "run status is BLOCKED; only READY_FOR_APPROVAL runs can be approved"
+  },
+  {
+   "test": "F: Forecast row relabelled Actual -> BLOCKED with specific control",
+   "passed": true,
+   "evidence": "status=BLOCKED; detects 'Transaction Status vs Calendar': True; no candidate folder: True"
+  },
+  {
+   "test": "F: Forecast row relabelled Actual -> approval refused",
+   "passed": true,
+   "evidence": "run status is BLOCKED; only READY_FOR_APPROVAL runs can be approved"
+  },
+  {
+   "test": "F: month missing from Calendar -> BLOCKED with specific control",
+   "passed": true,
+   "evidence": "status=BLOCKED; detects 'Unmatched Month': True; no candidate folder: True"
+  },
+  {
+   "test": "F: month missing from Calendar -> approval refused",
+   "passed": true,
+   "evidence": "run status is BLOCKED; only READY_FOR_APPROVAL runs can be approved"
+  },
+  {
+   "test": "F: negative units (self-consistent row) -> BLOCKED with specific control",
+   "passed": true,
+   "evidence": "status=BLOCKED; detects 'Non-positive': True; no candidate folder: True"
+  },
+  {
+   "test": "F: negative units (self-consistent row) -> approval refused",
+   "passed": true,
+   "evidence": "run status is BLOCKED; only READY_FOR_APPROVAL runs can be approved"
+  },
+  {
+   "test": "F: blank Net_Price cell -> BLOCKED with specific control",
+   "passed": true,
+   "evidence": "status=BLOCKED; detects 'Blank cells': True; no candidate folder: True"
+  },
+  {
+   "test": "F: blank Net_Price cell -> approval refused",
+   "passed": true,
+   "evidence": "run status is BLOCKED; only READY_FOR_APPROVAL runs can be approved"
+  },
+  {
+   "test": "F: duplicate budget key -> BLOCKED with specific control",
+   "passed": true,
+   "evidence": "status=BLOCKED; detects 'Duplicate Month|Region|Category': True; no candidate folder: True"
+  },
+  {
+   "test": "F: duplicate budget key -> approval refused",
+   "passed": true,
+   "evidence": "run status is BLOCKED; only READY_FOR_APPROVAL runs can be approved"
+  },
+  {
+   "test": "S: missing column -> REJECTED_INPUT, no workbook built",
+   "passed": true,
+   "evidence": "Sheet Customer_Master is missing columns ['Region']"
+  },
+  {
+   "test": "S: unexpected Status value -> REJECTED_INPUT",
+   "passed": true,
+   "evidence": "Unexpected Status values in Sales_Transactions: {'Draft'}"
+  },
+  {
+   "test": "R: internally consistent restatement of a published month -> READY but RESTATEMENT warning",
+   "passed": true,
+   "evidence": "status=READY_FOR_APPROVAL; restatement warning: True"
+  },
+  {
+   "test": "R: restated run cannot be approved without acknowledgement",
+   "passed": true,
+   "evidence": "run has warnings; review them and re-run approve with --ack-warnings:\n"
+  },
+  {
+   "test": "N: next-month simulation with STALE source baselines -> BLOCKED",
+   "passed": true,
+   "evidence": "status=BLOCKED"
+  },
+  {
+   "test": "N: next-month simulation with refreshed baselines -> READY, 22 months, no restatement",
+   "passed": true,
+   "evidence": "status=READY_FOR_APPROVAL; warnings=['O3 Region vs product: Maximum number of ', 'Budget integrity: original budget is 7.1']"
+  },
+  {
+   "test": "N: simulation workbook lists 22 actual months",
+   "passed": true,
+   "evidence": "Monthly_MIS months counted"
+  },
+  {
+   "test": "O: dataset without Sales_Budget -> READY, no budget sheets",
+   "passed": true,
+   "evidence": "status=READY_FOR_APPROVAL"
+  },
+  {
+   "test": "C: commentary with an invented number -> BLOCKED",
+   "passed": true,
+   "evidence": "Commentary override rejected: numbers not found in verified fact pack: ['41.3%']"
+  },
+  {
+   "test": "C: commentary over 150 words -> BLOCKED",
+   "passed": true,
+   "evidence": "Commentary override rejected: 188 words (limit 150)"
+  },
+  {
+   "test": "C: commentary without UNVERIFIED section -> BLOCKED",
+   "passed": true,
+   "evidence": "Commentary override rejected: must contain separate OBSERVED and UNVERIFIED CAUSES sections"
+  },
+  {
+   "test": "C: valid externally supplied commentary -> READY with disclosure warning",
+   "passed": true,
+   "evidence": "status=READY_FOR_APPROVAL"
+  },
+  {
+   "test": "I1 stale self-test record (code hash differs) -> run BLOCKED by selftest_record gate",
+   "passed": true,
+   "evidence": "self-test record is STALE: run_mis.py/mis_engine.py changed since it was produced - run \"run_mis.py "
+  },
+  {
+   "test": "I2 failing self-test record for current code -> run BLOCKED",
+   "passed": true,
+   "evidence": "self-test record shows failures (71/73 passed) - run \"run_mis.py selftest\" on the current code"
+  },
+  {
+   "test": "I3 missing self-test record -> run BLOCKED",
+   "passed": true,
+   "evidence": "no self-test record found - run \"run_mis.py selftest\" on the current code"
+  },
+  {
+   "test": "I4 hand-edited failing record (results hash no longer matches) -> run BLOCKED",
+   "passed": true,
+   "evidence": "self-test record is internally inconsistent (edited?) - run \"run_mis.py selftest\" on the current cod"
+  },
+  {
+   "test": "I5 (control) valid fixture record -> READY (so the I1-I4 blocks are caused by the record)",
+   "passed": true,
+   "evidence": "READY_FOR_APPROVAL"
+  },
+  {
+   "test": "I5 approval refused with --ack-warnings when record is stale / failing / missing",
+   "passed": true,
+   "evidence": "CRITICAL - self-test record invalid for the current code: self-test re"
+  },
+  {
+   "test": "I6 default record path: missing or fixture record -> approve refused and run BLOCKED; fixture rejected as genuine",
+   "passed": true,
+   "evidence": "CRITICAL - self-test record invalid for  | CRITICAL - self-test record invalid for the curren"
+  },
+  {
+   "test": "P1 first release is published/<latest-month>/<run-id>/ with workbook, manifest and APPROVAL.json",
+   "passed": true,
+   "evidence": "published/2026-09/20261017-174734_46de2957"
+  },
+  {
+   "test": "P2 re-approving an already published run is refused",
+   "passed": true,
+   "evidence": "run status is PUBLISHED; only READY_FOR_APPROVAL runs can be approved"
+  },
+  {
+   "test": "P3 second approval of the same month goes to a NEW folder; first release files unchanged; both kept; LATEST -> second",
+   "passed": true,
+   "evidence": "published/2026-09/20261017-175314_46de2957"
+  },
+  {
+   "test": "P4 pre-existing release folder is never overwritten; approval refused; sentinel untouched; run stays READY",
+   "passed": true,
+   "evidence": "release folder already exists and will never be overwritten: /tmp/claude-0/-home"
+  },
+  {
+   "test": "P5 LATEST.json unchanged by every refused approval",
+   "passed": true,
+   "evidence": "bytes identical before/after refusals"
+  },
+  {
+   "test": "P6 released files are marked read-only (best effort; NOT a security control)",
+   "passed": true,
+   "evidence": "mode bits"
+  },
+  {
+   "test": "P7 release register is a valid hash chain with one entry per release",
+   "passed": true,
+   "evidence": "2 entries"
+  },
+  {
+   "test": "M1 workbook AND manifest edited consistently -> refused (manifest hash recorded in audit log)",
+   "passed": true,
+   "evidence": "candidate manifest.json does not match the manifest hash recorded in the audit log (manife"
+  },
+  {
+   "test": "M2 archived input modified -> refused",
+   "passed": true,
+   "evidence": "archived input does not match the input hash recorded at run time"
+  },
+  {
+   "test": "M3 code differs from the code that built the candidate -> refused",
+   "passed": true,
+   "evidence": "code hash mismatch: the code that built this candidate is not the code now installed (re-r"
+  },
+  {
+   "test": "M4 BLOCKED run relabelled as candidate with edited status.json -> refused",
+   "passed": true,
+   "evidence": "audit log / manifest record this run as BLOCKED/BLOCKED, not READY_FOR_APPROVAL"
+  },
+  {
+   "test": "M5 boundary: a MANUAL copy into published/ is not prevented by the script, but verify-release flags it as unregistered",
+   "passed": true,
+   "evidence": "no APPROVAL.json: not a release produced by \"approve\""
+  },
+  {
+   "test": "A1 anchor record written, states NOT ANCHORED until stored externally, and audit log itself unchanged",
+   "passed": true,
+   "evidence": "anchor_record_16_entries.txt"
+  },
+  {
+   "test": "A2 verify-anchor passes with the correct externally stored hash",
+   "passed": true,
+   "evidence": "externally stored hash found at entry 15; log is unchanged since the anchor. Thi"
+  },
+  {
+   "test": "A3 verify-anchor fails with a wrong hash",
+   "passed": true,
+   "evidence": "the externally stored hash does not appear anywhere in this log (log rewritten o"
+  },
+  {
+   "test": "A4 edited audit log, and an emptied audit log -> verify-anchor fails",
+   "passed": true,
+   "evidence": "audit chain is internally broken: content altered  | audit chain is internally broken: audit "
+  },
+  {
+   "test": "A5 WHOLE chain recomputed after an edit passes the internal check (why it is not tamper-proof) but fails against the externally stored hash",
+   "passed": true,
+   "evidence": "internal chain valid=True; anchor check code=5"
+  },
+  {
+   "test": "V1 verify-release passes on an untouched release",
+   "passed": true,
+   "evidence": "release 20261017-174734_46de2957 matches APPROVAL.json and the register (approve"
+  },
+  {
+   "test": "V2 verify-release fails when a released file is modified",
+   "passed": true,
+   "evidence": "release file CFO_Monthly_Sales_MIS.xlsx missing or modified since approval"
+  },
+  {
+   "test": "V3 verify-release fails when APPROVAL.json is edited",
+   "passed": true,
+   "evidence": "APPROVAL.json differs from the version recorded in the register"
+  },
+  {
+   "test": "X: original dataset unchanged by the whole self-test",
+   "passed": true,
+   "evidence": "SHA-256 46de2957611b9534... before == after"
+  }
+ ],
+ "results_sha256": "36cadcc54b7a430d92e206419714b07ec495a11f90f6ec5b29428a31897e6c66",
+ "source_sha256": "46de2957611b9534d77f43628ee22a45b11b094f7f2ae46fb690f1c3d690ea3c"
+}
