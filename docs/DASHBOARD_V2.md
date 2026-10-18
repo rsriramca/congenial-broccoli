@@ -4,10 +4,11 @@ A static, self-contained HTML dashboard built from the **original synthetic data
 
 ## What it shows
 - KPI tiles: YTD net revenue, gross profit and gross margin vs prior-year YTD; latest actual month.
-- Monthly net revenue and gross profit (zero-based axis) and monthly gross margin (axis does not start at zero - labelled).
+- Monthly net revenue as stacked columns (COGS + gross profit) with the revenue total above each column and the segment values inside, and monthly gross margin as a labelled line (axis does not start at zero - labelled).
 - Current YTD (Jan-Sep 2026) vs prior-year YTD (Jan-Sep 2025): chart and table.
 - Region view and product view with a caveat that **region and product effects overlap** (each product is sold in exactly one region; each region carries only two products), so the views are confounded.
 - A prominent **data-quality warning at the top**: the original budget is about 7.1x actuals, 42% of it sits in cells with no sales, cause unresolved. **No budget variance is calculated or shown.** Any variance in the v1 workbook's `Budget_v2_Synthetic` / `Budget_vs_Actual_v2` sheets is illustrative only and not an approved budget.
+- Every bar carries a visible value label (above or inside; checked by a test). Colours: blue = COGS / current-period revenue, green = gross profit and margin; both pairs pass the dataviz palette validator in light and dark.
 - Every chart has hover tooltips (native SVG titles) and a table alternative; light and dark themes follow the OS setting; charts scroll sideways on narrow screens.
 
 ## Files

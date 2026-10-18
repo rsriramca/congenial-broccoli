@@ -63,6 +63,14 @@ def test_no_budget_variance_numbers_or_unsupported_claims():
         assert bad not in H.lower().replace('not validated in excel desktop', '').replace('not production-ready', ''), bad
     assert 'Not validated in Excel Desktop' in H
 
+def test_every_bar_carries_a_value_label():
+    import re as _re
+    bars = _re.findall(r'<rect [^>]*class="(bar|bar-prior|seg-cogs|seg-gp)"', H)
+    labels = len(_re.findall(r'<text [^>]*class="(?:vl|vli dk|vli)"', H))
+    # 42 stacked segments (+21 revenue totals above them = 63 labels), 6 YTD bars (6 labels), 12 region/product columns (value above + margin inside = 24); plus 21 margin-line point labels below
+    assert len(bars) == 42 + 6 + 4 + 8 and labels == 21 * 3 + 6 + 2 * (4 + 8), (len(bars), labels)
+    assert H.count('class="vl sm"') == 21
+
 def test_self_contained_static_file():
     assert '<script' not in H.lower() and 'src=' not in H.lower() and not re.search(r'https?://', H) and '@import' not in H and 'url(' not in H
 
