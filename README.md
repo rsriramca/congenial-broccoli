@@ -31,6 +31,6 @@ If you change either file in `pipeline/`, the self-test record becomes stale; re
 
 ## Working rules
 - Original source data is never edited; `tests/` fails if its hash changes.
-- Validated outputs are never overwritten: releases are immutable `releases/<month>/<run_id>/` folders; new versions go in through a pull request after approval.
+- Validated outputs are never overwritten: the pipeline writes immutable `published/<month>/<run_id>/` folders in its workspace; an approved release is copied unchanged into `releases/<month>/<run_id>/` here via pull request.
 - No credentials, personal or confidential data in the repo (synthetic data only; `.gitignore` blocks common secret files). Note: this repository is public.
 - Generated run folders (`mis_workspace/`) are not committed; only approved releases and their validation reports are.
