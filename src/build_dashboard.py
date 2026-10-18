@@ -79,9 +79,9 @@ def line_svg(labels, series, ymin, ymax, fmt, w=900, h=300, yname='', lfmt=None,
         pts = ' '.join(f'{X(i):.1f},{Y(v):.1f}' for i, v in enumerate(vals)); s.append(f'<polyline points="{pts}" class="ln {cls}"/>')
         for i, v in enumerate(vals): s.append(f'<circle cx="{X(i):.1f}" cy="{Y(v):.1f}" r="{4.5 if i == n - 1 else 3}" class="dot {cls}"><title>{E(name)} {E(labels[i])}: {lfmt(v)}</title></circle>')
         if plabels:
-            for i, v in enumerate(vals):   # label below a local low, above otherwise, so text never sits on the line
-                nb = [vals[j] for j in (i - 1, i + 1) if 0 <= j < n]; below = all(v < u for u in nb)
-                s.append(f'<text x="{X(i):.1f}" y="{Y(v) + (17 if below else -9):.1f}" class="vl sm" text-anchor="middle">{lfmt(v)}</text>')
+            for i, v in enumerate(vals):   # label on the side of the point away from the line, so text does not sit on it
+                nb = [vals[j] for j in (i - 1, i + 1) if 0 <= j < n]; below = v < sum(nb) / len(nb)
+                s.append(f'<text x="{X(i) + (4 if i == 0 else 0):.1f}" y="{Y(v) + (17 if below else -9):.1f}" class="vl sm" text-anchor="{"start" if i == 0 else "middle"}">{lfmt(v)}</text>')
         s.append(f'<text x="{X(n - 1) + 10:.1f}" y="{Y(vals[-1]) + 4:.1f}" class="dl">{E(name)} {lfmt(vals[-1])}</text>')
     return '<div class="cw">' + '\n'.join(s) + '</svg></div>'
 
