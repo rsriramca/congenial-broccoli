@@ -13,6 +13,11 @@ A portfolio project demonstrating an AI-assisted monthly CFO Sales MIS workflow 
 - **Operating boundaries:** `Runbook_and_Automation_Boundaries.md`
 - **Management commentary:** `CFO_commentary.md`
 
+## Test and reference additions
+- **Original synthetic source dataset:** `data/source/Nova_CFO_MIS_Complete_Synthetic_Dataset.xlsx` with `data/source/SHA256SUMS` (the file the v1 evidence was produced from; never edit it).
+- **Fast reconciliation tests:** `tests/test_reconciliation.py` (source hash, self-test record currency, row arithmetic and keys, dataset control baselines).
+- **Change history:** `CHANGELOG.md`.
+
 ## Project structure
 
 ```text
@@ -30,6 +35,20 @@ The original v1 files remain at the repository root intentionally, preserving th
 - The original budget remains unchanged.
 - Budget-versus-actual comparability is unresolved; any `Budget_v2_Synthetic` output is illustrative only, not an approved budget.
 - The documentation records automated checks, but it does not claim Microsoft Excel Desktop testing, scheduled refresh, live-data integration, unattended execution, or autonomous publication.
+
+## Known limitations (Provisional v1)
+
+- Budget-versus-actual comparability is **unresolved**: the original budget is about 7.1x actuals and 42% of it sits in cells with no sales; the cause is not established, so no original-budget variance is reported as approved.
+- The approver name is typed text, not an authenticated identity; the audit log is edit-detecting only (not tamper-proof, not externally anchored); the script cannot prevent files being copied by hand outside its controlled folders. See the [runbook](Runbook_and_Automation_Boundaries.md).
+- Validated only in LibreOffice. No Microsoft Excel Desktop test. Not production-ready.
+
+## Run the checks
+
+```bash
+python tests/test_reconciliation.py     # fast reconciliation checks
+python run_mis.py selftest --input data/source/Nova_CFO_MIS_Complete_Synthetic_Dataset.xlsx   # full fault-injection suite (about 10 minutes)
+```
+Changing `run_mis.py` or `mis_engine.py` makes `selftest_result.json` stale; runs are then blocked until the self-test is rerun.
 
 ## Run a candidate workflow
 
