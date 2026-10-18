@@ -3,13 +3,13 @@
 1. The original synthetic source is byte-identical to the recorded SHA-256 (it must never be modified).
 2. The self-test record matches the CURRENT pipeline code (stale record = pipeline refuses to approve).
 3. Source reconciliation: row arithmetic, key integrity and the dataset's own Control_Checks baselines.
-The full 51-control workbook check, independent recompute and 68-test fault-injection suite run via pipeline/run_mis.py (see docs/RUNBOOK.md).
+The full 51-control workbook check, independent recompute and 68-test fault-injection suite run via run_mis.py (see Runbook_and_Automation_Boundaries.md).
 """
 import hashlib, os, sys
 import pandas as pd
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, 'data', 'source', 'Nova_CFO_MIS_Complete_Synthetic_Dataset.xlsx')
-sys.path.insert(0, os.path.join(ROOT, 'pipeline'))
+sys.path.insert(0, ROOT)   # v1 scripts stay at the repository root
 
 def _sheets(): return pd.read_excel(SRC, sheet_name=None)
 

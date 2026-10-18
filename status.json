@@ -1,0 +1,71 @@
+{
+ "run_id": "20261017-175501_46de2957",
+ "status": "READY_FOR_APPROVAL",
+ "gates": [
+  {
+   "name": "input_schema",
+   "ok": true,
+   "detail": "all required sheets/columns present; Status values valid"
+  },
+  {
+   "name": "selftest_record",
+   "ok": true,
+   "detail": "valid for current code hash 5afbee66355e...: 68/68 tests passed at 2026-10-17T17:54:33Z"
+  },
+  {
+   "name": "commentary_valid",
+   "ok": true,
+   "detail": "128 words; numbers traceable to fact pack; rule-based commentary"
+  },
+  {
+   "name": "recalc_completed",
+   "ok": true,
+   "detail": "LibreOffice headless recalculation succeeded (pass 1)"
+  },
+  {
+   "name": "workbook_controls",
+   "ok": true,
+   "detail": "ALL 51 CHECKS PASS; 0 failing: "
+  },
+  {
+   "name": "independent_recompute",
+   "ok": true,
+   "detail": "325 figures compared, 0 differences"
+  },
+  {
+   "name": "error_scan",
+   "ok": true,
+   "detail": "0 error cells"
+  },
+  {
+   "name": "pass1_equals_final",
+   "ok": true,
+   "detail": "control results identical between build pass 1 and final build"
+  },
+  {
+   "name": "source_unchanged",
+   "ok": true,
+   "detail": "source SHA-256 identical before and after the run (original and working copy)"
+  },
+  {
+   "name": "audit_chain",
+   "ok": true,
+   "detail": "hash chain valid (edit-detecting only; not externally anchored)"
+  }
+ ],
+ "warnings": [
+  "O3 Region vs product: Maximum number of regions in which any single product sold (actual) -> value 1.00",
+  "Budget integrity: original budget is 7.1x actuals, 42% in cells with no sales; root cause UNRESOLVED; only SYNTHETIC v2 (unapproved) variance is shown."
+ ],
+ "input_sha256": "46de2957611b9534d77f43628ee22a45b11b094f7f2ae46fb690f1c3d690ea3c",
+ "code_sha256": "5afbee66355edddb26fa61442120fe7c74ec79ea9b7b277d5ebb29816efd0b6c",
+ "audit_integrity": "hash chain (edit-detecting only; NOT tamper-proof)",
+ "audit_externally_anchored": false,
+ "approver_identity_authenticated": false,
+ "output_dir": "/home/claude/out/v2/mis_workspace/runs/20261017-175501_46de2957/candidate",
+ "workbook": "/home/claude/out/v2/mis_workspace/runs/20261017-175501_46de2957/candidate/CFO_Monthly_Sales_MIS.xlsx",
+ "warnings_count": 2,
+ "failed_controls": [],
+ "recompute_differences": 0,
+ "error_cells": 0
+}

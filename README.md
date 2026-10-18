@@ -1,36 +1,65 @@
-# congenial-broccoli - Nova CFO Monthly Sales MIS (AI-assisted automation, synthetic data)
+# Nova CFO MIS Automation — Provisional v1
 
-A portfolio project showing a controlled, auditable monthly sales and gross-profit MIS workflow for a **fictional** company (Nova Consumer Products). All data is synthetic. It is not financial advice and not a production system.
+A portfolio project demonstrating an AI-assisted monthly CFO Sales MIS workflow using verified synthetic data.
 
-## Status
-- Current pipeline revision: **v3 (release controls)** - self-test 68/68 passed for the committed code.
-- Latest run on the original dataset: **READY_FOR_APPROVAL - not approved, not published.** No validated release exists in this repository yet (`releases/` is created only on approval).
-- Not tested: Microsoft Excel Desktop (LibreOffice only). Not implemented: scheduling, unattended runs, live refresh, authenticated approver identity, cryptographic signing, external audit anchoring. Details: [docs/RUNBOOK.md](docs/RUNBOOK.md).
+> **Status:** Provisional v1. The workflow is not a fully autonomous refresh solution and requires human finance review before any release or management use.
 
-## Layout
-| Path | Contents |
-|---|---|
-| `pipeline/run_mis.py` | CLI: `run`, `approve`, `selftest`, `anchor`, `verify-anchor`, `verify-release` |
-| `pipeline/mis_engine.py` | Workbook builder (formula-driven, 51 controls) |
-| `pipeline/selftest_result.json` | Self-test record, bound to the SHA-256 of the two code files. Stale record = runs blocked, approval refused |
-| `data/source/` | Original synthetic dataset (never modified) + `SHA256SUMS` |
-| `docs/RUNBOOK.md` | How to run, approve, anchor, verify; what the script does not do |
-| `docs/BUDGET_INTEGRITY.md` | Why the original budget is not used for variance (about 7.1x actuals; root cause unresolved) |
-| `docs/validation/` | Validation reports per candidate/release |
-| `tests/` | Fast reconciliation tests (source hash, record currency, row arithmetic, control baselines) |
-| `CHANGELOG.md` | Versions and approval status |
+## What is included
 
-## Quick start
+- **CFO monthly MIS workbook:** `CFO_Monthly_Sales_MIS.xlsx`
+- **Automation:** `run_mis.py` and `mis_engine.py`
+- **Validation evidence:** `Validation_Report_v2.md`, `selftest_result.json`, `run_validation_report.md`
+- **Budget integrity review:** `Budget_Integrity_Report.md`
+- **Operating boundaries:** `Runbook_and_Automation_Boundaries.md`
+- **Management commentary:** `CFO_commentary.md`
+
+## Test and reference additions
+- **Original synthetic source dataset:** `data/source/Nova_CFO_MIS_Complete_Synthetic_Dataset.xlsx` with `data/source/SHA256SUMS` (the file the v1 evidence was produced from; never edit it).
+- **Fast reconciliation tests:** `tests/test_reconciliation.py` (source hash, self-test record currency, row arithmetic and keys, dataset control baselines).
+- **Change history:** `CHANGELOG.md`.
+
+## Project structure
+
+```text
+data/       Synthetic sample-data policy and future approved inputs
+docs/       Project documentation
+outputs/    Future approved synthetic outputs and release artefacts
+src/        Future refactored application modules
 ```
-pip install pandas numpy openpyxl          # LibreOffice is also required for recalculation
-python tests/test_reconciliation.py        # fast checks
-python pipeline/run_mis.py run --input data/source/Nova_CFO_MIS_Complete_Synthetic_Dataset.xlsx --root mis_workspace
-python pipeline/run_mis.py approve --run <run_id> --by "<name>" [--ack-warnings]   # human step only
-```
-If you change either file in `pipeline/`, the self-test record becomes stale; rerun `python pipeline/run_mis.py selftest --input data/source/...xlsx` (about 10 minutes) and commit the refreshed record.
 
-## Working rules
-- Original source data is never edited; `tests/` fails if its hash changes.
-- Validated outputs are never overwritten: the pipeline writes immutable `published/<month>/<run_id>/` folders in its workspace; an approved release is copied unchanged into `releases/<month>/<run_id>/` here via pull request.
-- No credentials, personal or confidential data in the repo (synthetic data only; `.gitignore` blocks common secret files). Note: this repository is public.
-- Generated run folders (`mis_workspace/`) are not committed; only approved releases and their validation reports are.
+The original v1 files remain at the repository root intentionally, preserving their existing evidence paths while establishing a clear structure for future work.
+
+## Financial integrity and scope
+
+- The repository contains synthetic, non-sensitive example material only.
+- The original budget remains unchanged.
+- Budget-versus-actual comparability is unresolved; any `Budget_v2_Synthetic` output is illustrative only, not an approved budget.
+- The documentation records automated checks, but it does not claim Microsoft Excel Desktop testing, scheduled refresh, live-data integration, unattended execution, or autonomous publication.
+
+## Known limitations (Provisional v1)
+
+- Budget-versus-actual comparability is **unresolved**: the original budget is about 7.1x actuals and 42% of it sits in cells with no sales; the cause is not established, so no original-budget variance is reported as approved.
+- The approver name is typed text, not an authenticated identity; the audit log is edit-detecting only (not tamper-proof, not externally anchored); the script cannot prevent files being copied by hand outside its controlled folders. See the [runbook](Runbook_and_Automation_Boundaries.md).
+- Validated only in LibreOffice. No Microsoft Excel Desktop test. Not production-ready.
+
+## Run the checks
+
+```bash
+python tests/test_reconciliation.py     # fast reconciliation checks
+python run_mis.py selftest --input data/source/Nova_CFO_MIS_Complete_Synthetic_Dataset.xlsx   # full fault-injection suite (about 10 minutes)
+```
+Changing `run_mis.py` or `mis_engine.py` makes `selftest_result.json` stale; runs are then blocked until the self-test is rerun.
+
+## Run a candidate workflow
+
+Requirements: Python 3, pandas, numpy, openpyxl, and LibreOffice for headless recalculation.
+
+```bash
+python run_mis.py run --input <dataset.xlsx> --root mis_workspace
+```
+
+This produces a candidate for review. Publication requires a separate named human approver as documented in the [runbook](Runbook_and_Automation_Boundaries.md).
+
+## Before using this project
+
+Read the [budget integrity report](Budget_Integrity_Report.md) and [validation report](Validation_Report_v2.md). Do not upload real financial, customer, or credential-bearing files.
