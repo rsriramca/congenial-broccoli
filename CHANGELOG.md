@@ -1,5 +1,8 @@
 # Changelog
 
+## v2 dashboard enhancement (separate; Provisional v1 baseline unchanged)
+- Added `src/build_dashboard.py`, `outputs/v2/` (static HTML dashboard + figures JSON), `tests/test_dashboard.py`, `docs/DASHBOARD_V2.md`. No v1 file modified. No budget variance shown; manual snapshot only.
+
 ## Provisional v1 (current)
 - Initial prototype delivered to `main`: workbook, automation scripts, validation evidence, commentary, budget-integrity report, runbook (root-level files, unchanged).
 - Documentation structure and data policy added (`docs/`, `data/`, `outputs/`, `src/` guides).

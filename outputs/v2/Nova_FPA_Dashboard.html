@@ -1,0 +1,158 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Nova FP&A Dashboard v2</title><style>
+:root{color-scheme:light;--bg:#f6f5f2;--surface:#fcfcfb;--ink:#0b0b0b;--ink2:#52514e;--grid:#e1e0d9;--edge:rgba(11,11,11,.10);--s1:#2a78d6;--s2:#eb6834;--warnbg:#fff3e6;--warnbd:#d03b3b;--warnfg:#7a1d1d;--note:#eef3fb}
+@media (prefers-color-scheme:dark){:root:where(:not([data-theme=light])){color-scheme:dark;--bg:#121211;--surface:#1a1a19;--ink:#f0efec;--ink2:#c3c2b7;--grid:#2c2c2a;--edge:rgba(255,255,255,.10);--s1:#3987e5;--s2:#d95926;--warnbg:#3a1a18;--warnbd:#ec835a;--warnfg:#ffd9cf;--note:#17202c}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:980px;margin:0 auto;padding:20px 16px 48px}h1{font-size:24px;margin:4px 0 2px}h2{font-size:18px;margin:0 0 4px}p{margin:6px 0}
+.sub{color:var(--ink2);font-size:14px}.tag{display:inline-block;border:1px solid var(--edge);border-radius:999px;padding:2px 10px;font-size:12px;color:var(--ink2);margin:2px 4px 2px 0;background:var(--surface)}
+.warn{background:var(--warnbg);border:2px solid var(--warnbd);border-radius:10px;padding:14px 16px;margin:16px 0;color:var(--warnfg)}.warn b.t{font-size:16px}
+.note{background:var(--note);border:1px solid var(--edge);border-radius:10px;padding:10px 14px;margin:12px 0;font-size:14px}
+section.card{background:var(--surface);border:1px solid var(--edge);border-radius:12px;padding:16px;margin:16px 0}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}.kpi{background:var(--surface);border:1px solid var(--edge);border-radius:12px;padding:12px 14px}
+.kpi .v{font-size:26px;font-weight:650}.kpi .l{color:var(--ink2);font-size:13px}.kpi .d{font-size:13px;color:var(--ink2)}
+.chart{width:100%;min-width:600px;height:auto;display:block}.cw{overflow-x:auto}.grid{stroke:var(--grid);stroke-width:1}.tick{fill:var(--ink2);font-size:11px}.lbl{font-size:12px}.dl{fill:var(--ink);font-size:11.5px}
+.ln{fill:none;stroke-width:2}.s1{stroke:var(--s1)}.s2{stroke:var(--s2)}.dot{stroke:var(--surface);stroke-width:2}.dot.s1{fill:var(--s1)}.dot.s2{fill:var(--s2)}
+.bar{fill:var(--s1)}.bar-prior{fill:none;stroke:var(--s1);stroke-width:2;stroke-dasharray:5 3}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--ink2);margin:4px 0 6px}.legend i{display:inline-block;width:14px;height:0;border-top:3px solid;vertical-align:middle;margin-right:6px}
+.legend i.s1{border-color:var(--s1)}.legend i.s2{border-color:var(--s2)}.legend i.solid{height:10px;border:0;background:var(--s1);border-radius:2px}.legend i.hollow{height:10px;border:2px dashed var(--s1);border-radius:2px}
+table{border-collapse:collapse;width:100%;font-size:13px;margin-top:8px}th,td{padding:6px 8px;border-bottom:1px solid var(--grid);text-align:right;white-space:nowrap}th:first-child,td:first-child,th:nth-child(2).tx,td:nth-child(2).tx{text-align:left}th{color:var(--ink2);font-weight:600}
+.scroll{overflow-x:auto}details{margin-top:8px}summary{cursor:pointer;color:var(--ink2);font-size:13px}code,pre{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px}pre{background:var(--bg);padding:10px;border-radius:8px;overflow-x:auto}
+footer{color:var(--ink2);font-size:12.5px;margin-top:24px}
+</style></head><body><main>
+<h1>Nova Consumer Products - Executive FP&amp;A Dashboard</h1>
+<p class="sub">Actuals to 2026-09 &middot; INR &middot; built from the v1 synthetic source data</p>
+<p><span class="tag">v2 dashboard enhancement (separate from Provisional v1)</span><span class="tag">Synthetic data</span><span class="tag">Static snapshot - not live</span><span class="tag">Not validated in Excel Desktop</span><span class="tag">Not production-ready</span></p>
+<div class="warn" role="alert"><b class="t">&#9888; DATA-QUALITY WARNING - budget is NOT comparable</b><p>The original <code>Sales_Budget</code> is about <b>7.1x</b> actual net revenue for the same months, and <b>42%</b> of it sits in Region x Category cells that have no sales at all (5 of 12 cells). The cause is <b>unresolved</b>. <b>This dashboard therefore shows no budget-vs-actual variance.</b> Any variance in the v1 workbook's <code>Budget_v2_Synthetic</code> / <code>Budget_vs_Actual_v2</code> sheets is <b>illustrative only</b> (calibrated to prior-year actuals, not an approved budget) and must not be used for performance assessment.</p></div><div class="note"><b>Scope.</b> Synthetic data only (fictional company). Actuals only through 2026-09; forecast months excluded. Net revenue excludes GST, returns, rebates and intercompany. YTD = calendar months 1-9 of 2026 versus the same months of 2025 (the source calendar has no separate fiscal year; calendar-year YTD is an assumption). Static snapshot rebuilt manually: <b>no live refresh, no autonomous publishing</b>.</div>
+<div class="kpis"><div class="kpi"><div class="l">YTD net revenue 2026 (Jan-Sep)</div><div class="v">INR 180.9 lakh</div><div class="d">-1.8% vs prior-year YTD INR 184.2 lakh</div></div><div class="kpi"><div class="l">YTD gross profit 2026</div><div class="v">INR 64.6 lakh</div><div class="d">-2.1% vs INR 66.0 lakh</div></div><div class="kpi"><div class="l">YTD gross margin 2026</div><div class="v">35.7%</div><div class="d">-0.1 pp vs 35.8% prior-year YTD</div></div><div class="kpi"><div class="l">Latest actual month 2026-09</div><div class="v">INR 18.4 lakh</div><div class="d">margin 36.4%; gross profit INR 6.7 lakh</div></div></div>
+<section class="card"><h2>Monthly net revenue and gross profit</h2><p class="sub">INR lakh, actuals, zero-based axis.</p><div class="legend"><span><i class="s1"></i>Net revenue</span><span><i class="s2"></i>Gross profit</span></div><div class="cw"><svg viewBox="0 0 760 280" role="img" aria-label="Monthly net revenue and gross profit in INR lakh" class="chart">
+<line x1="52" x2="640" y1="246.0" y2="246.0" class="grid"/><text x="44" y="250.0" class="tick" text-anchor="end">0</text>
+<line x1="52" x2="640" y1="168.7" y2="168.7" class="grid"/><text x="44" y="172.7" class="tick" text-anchor="end">10</text>
+<line x1="52" x2="640" y1="91.3" y2="91.3" class="grid"/><text x="44" y="95.3" class="tick" text-anchor="end">20</text>
+<line x1="52" x2="640" y1="14.0" y2="14.0" class="grid"/><text x="44" y="18.0" class="tick" text-anchor="end">30</text>
+<text x="52.0" y="268" class="tick" text-anchor="middle">2025-01</text>
+<text x="140.2" y="268" class="tick" text-anchor="middle">2025-04</text>
+<text x="228.4" y="268" class="tick" text-anchor="middle">2025-07</text>
+<text x="316.6" y="268" class="tick" text-anchor="middle">2025-10</text>
+<text x="404.8" y="268" class="tick" text-anchor="middle">2026-01</text>
+<text x="493.0" y="268" class="tick" text-anchor="middle">2026-04</text>
+<text x="581.2" y="268" class="tick" text-anchor="middle">2026-07</text>
+<text x="640.0" y="268" class="tick" text-anchor="middle">2026-09</text>
+<polyline points="52.0,73.1 81.4,76.9 110.8,99.7 140.2,87.7 169.6,102.6 199.0,89.6 228.4,82.1 257.8,85.3 287.2,92.3 316.6,101.4 346.0,90.5 375.4,76.2 404.8,101.1 434.2,91.0 463.6,92.6 493.0,96.1 522.4,76.6 551.8,95.3 581.2,71.2 610.6,87.1 640.0,103.9" class="ln s1"/>
+<circle cx="52.0" cy="73.1" r="3" class="dot s1"><title>Net revenue 2025-01: 22.4</title></circle>
+<circle cx="81.4" cy="76.9" r="3" class="dot s1"><title>Net revenue 2025-02: 21.9</title></circle>
+<circle cx="110.8" cy="99.7" r="3" class="dot s1"><title>Net revenue 2025-03: 18.9</title></circle>
+<circle cx="140.2" cy="87.7" r="3" class="dot s1"><title>Net revenue 2025-04: 20.5</title></circle>
+<circle cx="169.6" cy="102.6" r="3" class="dot s1"><title>Net revenue 2025-05: 18.5</title></circle>
+<circle cx="199.0" cy="89.6" r="3" class="dot s1"><title>Net revenue 2025-06: 20.2</title></circle>
+<circle cx="228.4" cy="82.1" r="3" class="dot s1"><title>Net revenue 2025-07: 21.2</title></circle>
+<circle cx="257.8" cy="85.3" r="3" class="dot s1"><title>Net revenue 2025-08: 20.8</title></circle>
+<circle cx="287.2" cy="92.3" r="3" class="dot s1"><title>Net revenue 2025-09: 19.9</title></circle>
+<circle cx="316.6" cy="101.4" r="3" class="dot s1"><title>Net revenue 2025-10: 18.7</title></circle>
+<circle cx="346.0" cy="90.5" r="3" class="dot s1"><title>Net revenue 2025-11: 20.1</title></circle>
+<circle cx="375.4" cy="76.2" r="3" class="dot s1"><title>Net revenue 2025-12: 22.0</title></circle>
+<circle cx="404.8" cy="101.1" r="3" class="dot s1"><title>Net revenue 2026-01: 18.7</title></circle>
+<circle cx="434.2" cy="91.0" r="3" class="dot s1"><title>Net revenue 2026-02: 20.0</title></circle>
+<circle cx="463.6" cy="92.6" r="3" class="dot s1"><title>Net revenue 2026-03: 19.8</title></circle>
+<circle cx="493.0" cy="96.1" r="3" class="dot s1"><title>Net revenue 2026-04: 19.4</title></circle>
+<circle cx="522.4" cy="76.6" r="3" class="dot s1"><title>Net revenue 2026-05: 21.9</title></circle>
+<circle cx="551.8" cy="95.3" r="3" class="dot s1"><title>Net revenue 2026-06: 19.5</title></circle>
+<circle cx="581.2" cy="71.2" r="3" class="dot s1"><title>Net revenue 2026-07: 22.6</title></circle>
+<circle cx="610.6" cy="87.1" r="3" class="dot s1"><title>Net revenue 2026-08: 20.6</title></circle>
+<circle cx="640.0" cy="103.9" r="4.5" class="dot s1"><title>Net revenue 2026-09: 18.4</title></circle>
+<text x="650.0" y="107.9" class="dl">Net revenue 18.4</text>
+<polyline points="52.0,185.3 81.4,185.1 110.8,195.1 140.2,188.7 169.6,193.5 199.0,190.7 228.4,187.3 257.8,188.2 287.2,189.8 316.6,194.7 346.0,191.9 375.4,185.0 404.8,194.3 434.2,190.4 463.6,191.2 493.0,193.1 522.4,185.7 551.8,193.4 581.2,182.9 610.6,188.9 640.0,194.3" class="ln s2"/>
+<circle cx="52.0" cy="185.3" r="3" class="dot s2"><title>Gross profit 2025-01: 7.9</title></circle>
+<circle cx="81.4" cy="185.1" r="3" class="dot s2"><title>Gross profit 2025-02: 7.9</title></circle>
+<circle cx="110.8" cy="195.1" r="3" class="dot s2"><title>Gross profit 2025-03: 6.6</title></circle>
+<circle cx="140.2" cy="188.7" r="3" class="dot s2"><title>Gross profit 2025-04: 7.4</title></circle>
+<circle cx="169.6" cy="193.5" r="3" class="dot s2"><title>Gross profit 2025-05: 6.8</title></circle>
+<circle cx="199.0" cy="190.7" r="3" class="dot s2"><title>Gross profit 2025-06: 7.1</title></circle>
+<circle cx="228.4" cy="187.3" r="3" class="dot s2"><title>Gross profit 2025-07: 7.6</title></circle>
+<circle cx="257.8" cy="188.2" r="3" class="dot s2"><title>Gross profit 2025-08: 7.5</title></circle>
+<circle cx="287.2" cy="189.8" r="3" class="dot s2"><title>Gross profit 2025-09: 7.3</title></circle>
+<circle cx="316.6" cy="194.7" r="3" class="dot s2"><title>Gross profit 2025-10: 6.6</title></circle>
+<circle cx="346.0" cy="191.9" r="3" class="dot s2"><title>Gross profit 2025-11: 7.0</title></circle>
+<circle cx="375.4" cy="185.0" r="3" class="dot s2"><title>Gross profit 2025-12: 7.9</title></circle>
+<circle cx="404.8" cy="194.3" r="3" class="dot s2"><title>Gross profit 2026-01: 6.7</title></circle>
+<circle cx="434.2" cy="190.4" r="3" class="dot s2"><title>Gross profit 2026-02: 7.2</title></circle>
+<circle cx="463.6" cy="191.2" r="3" class="dot s2"><title>Gross profit 2026-03: 7.1</title></circle>
+<circle cx="493.0" cy="193.1" r="3" class="dot s2"><title>Gross profit 2026-04: 6.8</title></circle>
+<circle cx="522.4" cy="185.7" r="3" class="dot s2"><title>Gross profit 2026-05: 7.8</title></circle>
+<circle cx="551.8" cy="193.4" r="3" class="dot s2"><title>Gross profit 2026-06: 6.8</title></circle>
+<circle cx="581.2" cy="182.9" r="3" class="dot s2"><title>Gross profit 2026-07: 8.2</title></circle>
+<circle cx="610.6" cy="188.9" r="3" class="dot s2"><title>Gross profit 2026-08: 7.4</title></circle>
+<circle cx="640.0" cy="194.3" r="4.5" class="dot s2"><title>Gross profit 2026-09: 6.7</title></circle>
+<text x="650.0" y="198.3" class="dl">Gross profit 6.7</text></svg></div></section>
+<section class="card"><h2>Monthly gross margin</h2><p class="sub">Percent of net revenue. <b>Axis does not start at zero</b> (34%-37%) so the month-to-month range is visible; the total range is only 34.8% to 36.6%.</p><div class="cw"><svg viewBox="0 0 760 280" role="img" aria-label="Monthly gross margin percent" class="chart">
+<line x1="52" x2="640" y1="246.0" y2="246.0" class="grid"/><text x="44" y="250.0" class="tick" text-anchor="end">34.0%</text>
+<line x1="52" x2="640" y1="168.7" y2="168.7" class="grid"/><text x="44" y="172.7" class="tick" text-anchor="end">35.0%</text>
+<line x1="52" x2="640" y1="91.3" y2="91.3" class="grid"/><text x="44" y="95.3" class="tick" text-anchor="end">36.0%</text>
+<line x1="52" x2="640" y1="14.0" y2="14.0" class="grid"/><text x="44" y="18.0" class="tick" text-anchor="end">37.0%</text>
+<text x="52.0" y="268" class="tick" text-anchor="middle">2025-01</text>
+<text x="140.2" y="268" class="tick" text-anchor="middle">2025-04</text>
+<text x="228.4" y="268" class="tick" text-anchor="middle">2025-07</text>
+<text x="316.6" y="268" class="tick" text-anchor="middle">2025-10</text>
+<text x="404.8" y="268" class="tick" text-anchor="middle">2026-01</text>
+<text x="493.0" y="268" class="tick" text-anchor="middle">2026-04</text>
+<text x="581.2" y="268" class="tick" text-anchor="middle">2026-07</text>
+<text x="640.0" y="268" class="tick" text-anchor="middle">2026-09</text>
+<polyline points="52.0,159.0 81.4,91.3 110.8,184.3 140.2,72.8 169.6,47.2 199.0,142.3 228.4,104.0 257.8,92.6 287.2,48.5 316.6,131.2 346.0,186.6 375.4,95.8 404.8,118.1 434.2,101.7 463.6,115.8 493.0,147.5 522.4,122.2 551.8,177.2 581.2,83.6 610.6,99.1 640.0,60.4" class="ln s1"/>
+<circle cx="52.0" cy="159.0" r="3" class="dot s1"><title>Gross margin 2025-01: 35.1%</title></circle>
+<circle cx="81.4" cy="91.3" r="3" class="dot s1"><title>Gross margin 2025-02: 36.0%</title></circle>
+<circle cx="110.8" cy="184.3" r="3" class="dot s1"><title>Gross margin 2025-03: 34.8%</title></circle>
+<circle cx="140.2" cy="72.8" r="3" class="dot s1"><title>Gross margin 2025-04: 36.2%</title></circle>
+<circle cx="169.6" cy="47.2" r="3" class="dot s1"><title>Gross margin 2025-05: 36.6%</title></circle>
+<circle cx="199.0" cy="142.3" r="3" class="dot s1"><title>Gross margin 2025-06: 35.3%</title></circle>
+<circle cx="228.4" cy="104.0" r="3" class="dot s1"><title>Gross margin 2025-07: 35.8%</title></circle>
+<circle cx="257.8" cy="92.6" r="3" class="dot s1"><title>Gross margin 2025-08: 36.0%</title></circle>
+<circle cx="287.2" cy="48.5" r="3" class="dot s1"><title>Gross margin 2025-09: 36.6%</title></circle>
+<circle cx="316.6" cy="131.2" r="3" class="dot s1"><title>Gross margin 2025-10: 35.5%</title></circle>
+<circle cx="346.0" cy="186.6" r="3" class="dot s1"><title>Gross margin 2025-11: 34.8%</title></circle>
+<circle cx="375.4" cy="95.8" r="3" class="dot s1"><title>Gross margin 2025-12: 35.9%</title></circle>
+<circle cx="404.8" cy="118.1" r="3" class="dot s1"><title>Gross margin 2026-01: 35.7%</title></circle>
+<circle cx="434.2" cy="101.7" r="3" class="dot s1"><title>Gross margin 2026-02: 35.9%</title></circle>
+<circle cx="463.6" cy="115.8" r="3" class="dot s1"><title>Gross margin 2026-03: 35.7%</title></circle>
+<circle cx="493.0" cy="147.5" r="3" class="dot s1"><title>Gross margin 2026-04: 35.3%</title></circle>
+<circle cx="522.4" cy="122.2" r="3" class="dot s1"><title>Gross margin 2026-05: 35.6%</title></circle>
+<circle cx="551.8" cy="177.2" r="3" class="dot s1"><title>Gross margin 2026-06: 34.9%</title></circle>
+<circle cx="581.2" cy="83.6" r="3" class="dot s1"><title>Gross margin 2026-07: 36.1%</title></circle>
+<circle cx="610.6" cy="99.1" r="3" class="dot s1"><title>Gross margin 2026-08: 35.9%</title></circle>
+<circle cx="640.0" cy="60.4" r="4.5" class="dot s1"><title>Gross margin 2026-09: 36.4%</title></circle>
+<text x="650.0" y="64.4" class="dl">Gross margin 36.4%</text></svg></div>
+<details><summary>Show monthly table</summary><div class="scroll"><table class=""><thead><tr><th>Month</th><th>Net revenue (INR lakh)</th><th>COGS</th><th>Gross profit</th><th>Gross margin</th></tr></thead><tbody><tr><td>2025-01</td><td>22.4</td><td>14.5</td><td>7.9</td><td>35.1%</td></tr><tr><td>2025-02</td><td>21.9</td><td>14.0</td><td>7.9</td><td>36.0%</td></tr><tr><td>2025-03</td><td>18.9</td><td>12.3</td><td>6.6</td><td>34.8%</td></tr><tr><td>2025-04</td><td>20.5</td><td>13.0</td><td>7.4</td><td>36.2%</td></tr><tr><td>2025-05</td><td>18.5</td><td>11.8</td><td>6.8</td><td>36.6%</td></tr><tr><td>2025-06</td><td>20.2</td><td>13.1</td><td>7.1</td><td>35.3%</td></tr><tr><td>2025-07</td><td>21.2</td><td>13.6</td><td>7.6</td><td>35.8%</td></tr><tr><td>2025-08</td><td>20.8</td><td>13.3</td><td>7.5</td><td>36.0%</td></tr><tr><td>2025-09</td><td>19.9</td><td>12.6</td><td>7.3</td><td>36.6%</td></tr><tr><td>2025-10</td><td>18.7</td><td>12.1</td><td>6.6</td><td>35.5%</td></tr><tr><td>2025-11</td><td>20.1</td><td>13.1</td><td>7.0</td><td>34.8%</td></tr><tr><td>2025-12</td><td>22.0</td><td>14.1</td><td>7.9</td><td>35.9%</td></tr><tr><td>2026-01</td><td>18.7</td><td>12.1</td><td>6.7</td><td>35.7%</td></tr><tr><td>2026-02</td><td>20.0</td><td>12.9</td><td>7.2</td><td>35.9%</td></tr><tr><td>2026-03</td><td>19.8</td><td>12.8</td><td>7.1</td><td>35.7%</td></tr><tr><td>2026-04</td><td>19.4</td><td>12.5</td><td>6.8</td><td>35.3%</td></tr><tr><td>2026-05</td><td>21.9</td><td>14.1</td><td>7.8</td><td>35.6%</td></tr><tr><td>2026-06</td><td>19.5</td><td>12.7</td><td>6.8</td><td>34.9%</td></tr><tr><td>2026-07</td><td>22.6</td><td>14.4</td><td>8.2</td><td>36.1%</td></tr><tr><td>2026-08</td><td>20.6</td><td>13.2</td><td>7.4</td><td>35.9%</td></tr><tr><td>2026-09</td><td>18.4</td><td>11.7</td><td>6.7</td><td>36.4%</td></tr></tbody></table></div></details></section>
+<section class="card"><h2>YTD 2026 (Jan-Sep) versus prior-year YTD</h2><div class="legend"><span><i class="solid"></i>2026 YTD</span><span><i class="hollow"></i>2025 YTD (same months)</span></div><p class="sub">INR lakh. Revenue -1.8%, gross profit -2.1%, margin -0.1 pp. Differences are small and this is one synthetic series; no cause can be inferred from the data.</p><div class="cw"><svg viewBox="0 0 760 250" class="chart" role="img" aria-label="YTD current versus prior year">
+<line x1="52" x2="740" y1="206.0" y2="206.0" class="grid"/><text x="44" y="210.0" class="tick" text-anchor="end">0</text>
+<line x1="52" x2="740" y1="159.5" y2="159.5" class="grid"/><text x="44" y="163.5" class="tick" text-anchor="end">50</text>
+<line x1="52" x2="740" y1="113.0" y2="113.0" class="grid"/><text x="44" y="117.0" class="tick" text-anchor="end">100</text>
+<line x1="52" x2="740" y1="66.5" y2="66.5" class="grid"/><text x="44" y="70.5" class="tick" text-anchor="end">150</text>
+<line x1="52" x2="740" y1="20.0" y2="20.0" class="grid"/><text x="44" y="24.0" class="tick" text-anchor="end">200</text>
+<rect x="102.5" y="34.7" width="59.6" height="171.3" rx="3" class="bar-prior"><title>Net revenue Prior-year YTD: INR 184.2 lakh</title></rect><text x="132.3" y="29.7" class="dl" text-anchor="middle">184.2</text>
+<rect x="166.1" y="37.7" width="59.6" height="168.3" rx="3" class="bar"><title>Net revenue Current YTD: INR 180.9 lakh</title></rect><text x="195.9" y="32.7" class="dl" text-anchor="middle">180.9</text>
+<text x="166.7" y="228" class="tick lbl" text-anchor="middle">Net revenue</text>
+<rect x="331.8" y="96.0" width="59.6" height="110.0" rx="3" class="bar-prior"><title>COGS Prior-year YTD: INR 118.2 lakh</title></rect><text x="361.6" y="91.0" class="dl" text-anchor="middle">118.2</text>
+<rect x="395.4" y="97.8" width="59.6" height="108.2" rx="3" class="bar"><title>COGS Current YTD: INR 116.3 lakh</title></rect><text x="425.2" y="92.8" class="dl" text-anchor="middle">116.3</text>
+<text x="396.0" y="228" class="tick lbl" text-anchor="middle">COGS</text>
+<rect x="561.1" y="144.6" width="59.6" height="61.4" rx="3" class="bar-prior"><title>Gross profit Prior-year YTD: INR 66.0 lakh</title></rect><text x="590.9" y="139.6" class="dl" text-anchor="middle">66.0</text>
+<rect x="624.7" y="145.9" width="59.6" height="60.1" rx="3" class="bar"><title>Gross profit Current YTD: INR 64.6 lakh</title></rect><text x="654.6" y="140.9" class="dl" text-anchor="middle">64.6</text>
+<text x="625.3" y="228" class="tick lbl" text-anchor="middle">Gross profit</text></svg></div><div class="scroll"><table class=""><thead><tr><th>Measure (INR lakh)</th><th>2026 YTD</th><th>2025 YTD</th><th>Change</th></tr></thead><tbody><tr><td>Net revenue</td><td>180.9</td><td>184.2</td><td>-1.8%</td></tr><tr><td>COGS</td><td>116.3</td><td>118.2</td><td>-1.6%</td></tr><tr><td>Gross profit</td><td>64.6</td><td>66.0</td><td>-2.1%</td></tr><tr><td>Gross margin</td><td>35.7%</td><td>35.8%</td><td>-0.1 pp</td></tr></tbody></table></div></section>
+<section class="card"><h2>Region view</h2><div class="note"><b>Caveat - region and product effects overlap.</b> In this dataset each product is sold in exactly 1 region (max regions per product = 1), and each region carries only 2 of the 8 products. A region's result is therefore its two products' result, and a product's result is its region's. The two views are <b>confounded</b>: do not read a regional difference as a regional effect, or a product difference as a product effect. The data cannot separate them.</div><div class="legend"><span><i class="solid"></i>Net revenue, actuals to 2026-09</span></div><div class="cw"><svg viewBox="0 0 760 128" class="chart" role="img" aria-label="bar chart">
+<text x="142" y="21" class="tick lbl" text-anchor="end">North</text><rect x="150" y="8" width="410.0" height="16" rx="3" class="bar"><title>North: net revenue INR 124.1 lakh, gross margin 36.6%</title></rect><text x="566.0" y="21" class="dl">124.1  (36.6% margin)</text>
+<text x="142" y="51" class="tick lbl" text-anchor="end">West</text><rect x="150" y="38" width="398.7" height="16" rx="3" class="bar"><title>West: net revenue INR 120.7 lakh, gross margin 36.0%</title></rect><text x="554.7" y="51" class="dl">120.7  (36.0% margin)</text>
+<text x="142" y="81" class="tick lbl" text-anchor="end">East</text><rect x="150" y="68" width="333.0" height="16" rx="3" class="bar"><title>East: net revenue INR 100.8 lakh, gross margin 36.4%</title></rect><text x="489.0" y="81" class="dl">100.8  (36.4% margin)</text>
+<text x="142" y="111" class="tick lbl" text-anchor="end">South</text><rect x="150" y="98" width="265.2" height="16" rx="3" class="bar"><title>South: net revenue INR 80.3 lakh, gross margin 33.1%</title></rect><text x="421.2" y="111" class="dl">80.3  (33.1% margin)</text></svg></div><div class="scroll"><table class=""><thead><tr><th>Region</th><th>Products sold</th><th>Net revenue (INR lakh)</th><th>Share</th><th>Gross margin</th><th>2026 YTD revenue</th><th>2025 YTD revenue</th><th>YTD change</th><th>YTD margin 2026 / 2025</th></tr></thead><tbody><tr><td>North</td><td>Body Lotion, Soap 4-pack</td><td>124.1</td><td>29.1%</td><td>36.6%</td><td>49.1</td><td>57.8</td><td>-15.0%</td><td>36.5% / 37.0%</td></tr><tr><td>West</td><td>Floor Cleaner, Shampoo 400ml</td><td>120.7</td><td>28.3%</td><td>36.0%</td><td>52.9</td><td>51.1</td><td>+3.5%</td><td>35.5% / 36.3%</td></tr><tr><td>East</td><td>Breakfast Cereal, Dishwash Gel</td><td>100.8</td><td>23.7%</td><td>36.4%</td><td>44.9</td><td>40.9</td><td>+9.9%</td><td>36.7% / 36.2%</td></tr><tr><td>South</td><td>Biscuits 500g, Detergent 1kg</td><td>80.3</td><td>18.9%</td><td>33.1%</td><td>33.9</td><td>34.4</td><td>-1.3%</td><td>33.5% / 32.7%</td></tr></tbody></table></div></section>
+<section class="card"><h2>Product view</h2><div class="note"><b>Caveat - region and product effects overlap.</b> In this dataset each product is sold in exactly 1 region (max regions per product = 1), and each region carries only 2 of the 8 products. A region's result is therefore its two products' result, and a product's result is its region's. The two views are <b>confounded</b>: do not read a regional difference as a regional effect, or a product difference as a product effect. The data cannot separate them.</div><div class="legend"><span><i class="solid"></i>Net revenue, actuals to 2026-09</span></div><div class="cw"><svg viewBox="0 0 760 248" class="chart" role="img" aria-label="bar chart">
+<text x="142" y="21" class="tick lbl" text-anchor="end">Body Lotion</text><rect x="150" y="8" width="410.0" height="16" rx="3" class="bar"><title>Body Lotion: net revenue INR 79.7 lakh, gross margin 33.7%</title></rect><text x="566.0" y="21" class="dl">79.7  (33.7% margin)</text>
+<text x="142" y="51" class="tick lbl" text-anchor="end">Shampoo 400ml</text><rect x="150" y="38" width="382.4" height="16" rx="3" class="bar"><title>Shampoo 400ml: net revenue INR 74.4 lakh, gross margin 35.0%</title></rect><text x="538.4" y="51" class="dl">74.4  (35.0% margin)</text>
+<text x="142" y="81" class="tick lbl" text-anchor="end">Breakfast Cereal</text><rect x="150" y="68" width="327.1" height="16" rx="3" class="bar"><title>Breakfast Cereal: net revenue INR 63.6 lakh, gross margin 34.6%</title></rect><text x="483.1" y="81" class="dl">63.6  (34.6% margin)</text>
+<text x="142" y="111" class="tick lbl" text-anchor="end">Detergent 1kg</text><rect x="150" y="98" width="274.0" height="16" rx="3" class="bar"><title>Detergent 1kg: net revenue INR 53.3 lakh, gross margin 32.6%</title></rect><text x="430.0" y="111" class="dl">53.3  (32.6% margin)</text>
+<text x="142" y="141" class="tick lbl" text-anchor="end">Floor Cleaner</text><rect x="150" y="128" width="238.2" height="16" rx="3" class="bar"><title>Floor Cleaner: net revenue INR 46.3 lakh, gross margin 37.5%</title></rect><text x="394.2" y="141" class="dl">46.3  (37.5% margin)</text>
+<text x="142" y="171" class="tick lbl" text-anchor="end">Soap 4-pack</text><rect x="150" y="158" width="228.1" height="16" rx="3" class="bar"><title>Soap 4-pack: net revenue INR 44.4 lakh, gross margin 41.9%</title></rect><text x="384.1" y="171" class="dl">44.4  (41.9% margin)</text>
+<text x="142" y="201" class="tick lbl" text-anchor="end">Dishwash Gel</text><rect x="150" y="188" width="191.1" height="16" rx="3" class="bar"><title>Dishwash Gel: net revenue INR 37.2 lakh, gross margin 39.4%</title></rect><text x="347.1" y="201" class="dl">37.2  (39.4% margin)</text>
+<text x="142" y="231" class="tick lbl" text-anchor="end">Biscuits 500g</text><rect x="150" y="218" width="138.8" height="16" rx="3" class="bar"><title>Biscuits 500g: net revenue INR 27.0 lakh, gross margin 34.0%</title></rect><text x="294.8" y="231" class="dl">27.0  (34.0% margin)</text></svg></div><div class="scroll"><table class=""><thead><tr><th>Product</th><th>Region sold in</th><th>Net revenue (INR lakh)</th><th>Share</th><th>Gross margin</th><th>2026 YTD revenue</th><th>2025 YTD revenue</th><th>YTD change</th><th>YTD margin 2026 / 2025</th></tr></thead><tbody><tr><td>Body Lotion</td><td>North</td><td>79.7</td><td>18.7%</td><td>33.7%</td><td>29.4</td><td>38.8</td><td>-24.2%</td><td>33.5% / 34.2%</td></tr><tr><td>Shampoo 400ml</td><td>West</td><td>74.4</td><td>17.5%</td><td>35.0%</td><td>33.1</td><td>30.4</td><td>+9.1%</td><td>34.5% / 35.2%</td></tr><tr><td>Breakfast Cereal</td><td>East</td><td>63.6</td><td>14.9%</td><td>34.6%</td><td>29.3</td><td>24.9</td><td>+17.5%</td><td>35.3% / 33.8%</td></tr><tr><td>Detergent 1kg</td><td>South</td><td>53.3</td><td>12.5%</td><td>32.6%</td><td>22.0</td><td>22.7</td><td>-3.2%</td><td>33.1% / 32.3%</td></tr><tr><td>Floor Cleaner</td><td>West</td><td>46.3</td><td>10.9%</td><td>37.5%</td><td>19.8</td><td>20.8</td><td>-4.7%</td><td>37.3% / 37.9%</td></tr><tr><td>Soap 4-pack</td><td>North</td><td>44.4</td><td>10.4%</td><td>41.9%</td><td>19.7</td><td>19.0</td><td>+3.7%</td><td>41.1% / 42.6%</td></tr><tr><td>Dishwash Gel</td><td>East</td><td>37.2</td><td>8.7%</td><td>39.4%</td><td>15.7</td><td>16.0</td><td>-2.0%</td><td>39.2% / 39.9%</td></tr><tr><td>Biscuits 500g</td><td>South</td><td>27.0</td><td>6.3%</td><td>34.0%</td><td>11.9</td><td>11.7</td><td>+2.3%</td><td>34.4% / 33.4%</td></tr></tbody></table></div></section>
+<section class="card"><h2>Budget comparability (no variance shown)</h2><p>Original budget / actual net revenue (same months): <b>7.1x</b>; 4.1x on the cells that do have sales. 42% of budget is in cells with no sales. Cause unresolved; the original budget is unchanged in the source and the v1 documents.
+Budget variance is intentionally <b>not</b> calculated here. See <code>Budget_Integrity_Report.md</code>.</p></section>
+<section class="card"><h2>How to refresh (manual)</h2><pre>pip install pandas numpy openpyxl
+python src/build_dashboard.py --input data/source/Nova_CFO_MIS_Complete_Synthetic_Dataset.xlsx --out outputs/v2
+python tests/test_dashboard.py          # reconciliation checks</pre>
+<p>To use a newer synthetic extract: place it under <code>data/</code>, first build and review the v1 MIS candidate with <code>python run_mis.py run</code> (human approval remains separate), then rerun the commands above on that file. See <code>docs/DASHBOARD_V2.md</code>.</p></section>
+<footer>Source file <code>Nova_CFO_MIS_Complete_Synthetic_Dataset.xlsx</code> SHA-256 <code>46de2957611b9534...</code>. Recomputed in pandas from the source; reconciled to the v1 MIS workbook by <code>tests/test_dashboard.py</code> (LibreOffice-calculated values; not tested in Microsoft Excel Desktop). Synthetic, non-sensitive data. Not live, not autonomous, not production-ready.</footer>
+</main></body></html>

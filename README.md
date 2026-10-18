@@ -60,6 +60,10 @@ python run_mis.py run --input <dataset.xlsx> --root mis_workspace
 
 This produces a candidate for review. Publication requires a separate named human approver as documented in the [runbook](Runbook_and_Automation_Boundaries.md).
 
+## v2 enhancement: executive FP&A dashboard (separate from Provisional v1)
+
+A static HTML dashboard built from the same synthetic source data is documented in [docs/DASHBOARD_V2.md](docs/DASHBOARD_V2.md) (`outputs/v2/Nova_FPA_Dashboard.html`). It carries the budget-comparability warning, shows no budget variance, is a manual snapshot (no live refresh), and does not change the Provisional v1 baseline above.
+
 ## Before using this project
 
 Read the [budget integrity report](Budget_Integrity_Report.md) and [validation report](Validation_Report_v2.md). Do not upload real financial, customer, or credential-bearing files.
