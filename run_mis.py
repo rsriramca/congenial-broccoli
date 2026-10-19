@@ -44,8 +44,8 @@ def utcnow(): return dt.datetime.now(dt.timezone.utc).strftime('%Y-%m-%dT%H:%M:%
 
 CODE_FILES = ('mis_engine.py', 'run_mis.py')
 SELFTEST_PATH = os.path.join(HERE, 'selftest_result.json')
-MIN_SELFTEST_TESTS = 68
-REQUIRED_TAGS = ('S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'F:', 'S:', 'R:', 'N:', 'O:', 'C:', 'X:', 'I1', 'I2', 'I3', 'I4', 'I5', 'I6', 'P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7',
+MIN_SELFTEST_TESTS = 69
+REQUIRED_TAGS = ('S1', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'F:', 'S:', 'R:', 'N:', 'O:', 'C:', 'X:', 'I1', 'I2', 'I3', 'I4', 'I5', 'I6', 'P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7',
                  'M1', 'M2', 'M3', 'M4', 'M5', 'A1', 'A2', 'A3', 'A4', 'A5', 'V1', 'V2', 'V3')
 
 def code_hash():
@@ -177,7 +177,8 @@ def error_scan(wb):
 def run(inp, root, commentary_file=None, quiet=False, record_path=None):
     inp = os.path.abspath(inp); root = os.path.abspath(root)
     if not os.path.isfile(inp): print('ERROR: input not found', file=sys.stderr); return 2, None
-    h_in = sha256(inp); run_id = dt.datetime.now(dt.timezone.utc).strftime('%Y%m%d-%H%M%S') + '_' + h_in[:8]
+    h_in = sha256(inp); base_id = dt.datetime.now(dt.timezone.utc).strftime('%Y%m%d-%H%M%S') + '_' + h_in[:8]; run_id = base_id; n_ = 1
+    while os.path.exists(os.path.join(root, 'runs', run_id)): n_ += 1; run_id = f'{base_id}-{n_}'      # same input twice in one second must never share or overwrite a run folder
     rd = os.path.join(root, 'runs', run_id); os.makedirs(os.path.join(rd, 'input')); os.makedirs(os.path.join(rd, 'work')); os.makedirs(os.path.join(rd, 'audit'))
     audit = Audit(os.path.join(rd, 'audit', 'audit_log.jsonl'), run_id)
     ip = os.path.join(rd, 'input', os.path.basename(inp)); shutil.copy2(inp, ip); os.chmod(ip, 0o444)
@@ -506,6 +507,15 @@ def selftest(src, root):
         code, st = _run(p, root, quiet=True); det = failed_names(st) if st else ''
         rec(f'F: {nm} -> BLOCKED with specific control', code == 3 and st['status'] == 'BLOCKED' and key in det and not os.path.exists(os.path.join(root, 'runs', st['run_id'], 'candidate')), f"status={st['status']}; detects '{key}': {key in det}; no candidate folder: {not os.path.exists(os.path.join(root, 'runs', st['run_id'], 'candidate'))}")
         c, msg = _approve(st['run_id'], 'selftest', True, root, quiet=True); rec(f'F: {nm} -> approval refused', c == 4, str(msg)[:70])
+    # S7: two runs of the same input in the same second must get distinct folders (frozen clock)
+    import types
+    class _Fixed(dt.datetime):
+        @classmethod
+        def now(cls, tz=None): return dt.datetime(2030, 1, 1, 0, 0, 0, tzinfo=dt.timezone.utc)
+    p7 = variant('same_second', lambda x: x.__setitem__('Customer_Master', x['Customer_Master'].drop(columns=['Region']))); real_dt = globals()['dt']; globals()['dt'] = types.SimpleNamespace(datetime=_Fixed, timezone=real_dt.timezone)
+    try: c7a, s7a = _run(p7, root, quiet=True); c7b, s7b = _run(p7, root, quiet=True)
+    finally: globals()['dt'] = real_dt
+    rec('S7 two runs of the same input in the same second get distinct run folders, neither overwritten', s7a['run_id'] != s7b['run_id'] and s7b['run_id'].endswith('-2') and all(os.path.isdir(os.path.join(root, 'runs', r_)) for r_ in (s7a['run_id'], s7b['run_id'])), f"{s7a['run_id']} / {s7b['run_id']}")
     # schema failure
     p = variant('schema', lambda x: x.__setitem__('Customer_Master', x['Customer_Master'].drop(columns=['Region'])))
     code, st = _run(p, root, quiet=True); rec('S: missing column -> REJECTED_INPUT, no workbook built', code == 2 and st['status'] == 'REJECTED_INPUT' and not any(f.endswith('.xlsx') for _, _, fs in os.walk(os.path.join(root, 'runs', st['run_id'])) for f in fs if f != os.path.basename(p)), st['gates'][0]['detail'][:90])
