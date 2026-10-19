@@ -1,0 +1,13 @@
+# Keep checkouts byte-identical on every OS. selftest_result.json is bound to the SHA-256 of run_mis.py and mis_engine.py;
+# Windows CRLF conversion changes those bytes and makes the record read as STALE.
+* text=auto
+*.py text eol=lf
+*.json text eol=lf
+*.jsonl text eol=lf
+*.md text eol=lf
+*.html text eol=lf
+SHA256SUMS text eol=lf
+.gitattributes text eol=lf
+.gitignore text eol=lf
+*.xlsx binary
+*.zip binary

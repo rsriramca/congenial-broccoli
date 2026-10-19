@@ -1,13 +1,13 @@
 {
- "ts": "2026-10-17T17:54:33Z",
- "code_sha256": "5afbee66355edddb26fa61442120fe7c74ec79ea9b7b277d5ebb29816efd0b6c",
+ "ts": "2026-10-19T16:54:48Z",
+ "code_sha256": "fa6a7a7977035db6ace6f22595099e513a4a8b781963dc4b3b60f5006c119ec6",
  "code_files": {
   "mis_engine.py": "bba7db8017b221661b4f7b582e5c009d4a7d92267b76e506ae131d76a28371bd",
-  "run_mis.py": "e18b5e026b28fdb93d66c8dbf5a50e68b9091c9811b9b5da9a1fb4a29e1ab101"
+  "run_mis.py": "16edf8f99faf2cc0e4a6d2707f8b411801b4db4b22981bf1f27c6c444f48b0c1"
  },
  "fixture": false,
- "total": 68,
- "passed": 68,
+ "total": 69,
+ "passed": 69,
  "all_passed": true,
  "results": [
   {
@@ -38,7 +38,7 @@
   {
    "test": "S6 approval with acknowledgement publishes and writes APPROVAL.json",
    "passed": true,
-   "evidence": "cratchpad/stroot2/published/2026-09/20261017-174734_46de2957"
+   "evidence": "ratchpad/st_repo2/published/2026-09/20261019-165039_46de2957"
   },
   {
    "test": "F: duplicate Invoice_ID -> BLOCKED with specific control",
@@ -151,6 +151,11 @@
    "evidence": "run status is BLOCKED; only READY_FOR_APPROVAL runs can be approved"
   },
   {
+   "test": "S7 two runs of the same input in the same second get distinct run folders, neither overwritten",
+   "passed": true,
+   "evidence": "20300101-000000_07131576 / 20300101-000000_07131576-2"
+  },
+  {
    "test": "S: missing column -> REJECTED_INPUT, no workbook built",
    "passed": true,
    "evidence": "Sheet Customer_Master is missing columns ['Region']"
@@ -218,7 +223,7 @@
   {
    "test": "I2 failing self-test record for current code -> run BLOCKED",
    "passed": true,
-   "evidence": "self-test record shows failures (71/73 passed) - run \"run_mis.py selftest\" on the current code"
+   "evidence": "self-test record shows failures (72/74 passed) - run \"run_mis.py selftest\" on the current code"
   },
   {
    "test": "I3 missing self-test record -> run BLOCKED",
@@ -248,7 +253,7 @@
   {
    "test": "P1 first release is published/<latest-month>/<run-id>/ with workbook, manifest and APPROVAL.json",
    "passed": true,
-   "evidence": "published/2026-09/20261017-174734_46de2957"
+   "evidence": "published/2026-09/20261019-165039_46de2957"
   },
   {
    "test": "P2 re-approving an already published run is refused",
@@ -258,7 +263,7 @@
   {
    "test": "P3 second approval of the same month goes to a NEW folder; first release files unchanged; both kept; LATEST -> second",
    "passed": true,
-   "evidence": "published/2026-09/20261017-175314_46de2957"
+   "evidence": "published/2026-09/20261019-165401_46de2957"
   },
   {
    "test": "P4 pre-existing release folder is never overwritten; approval refused; sentinel untouched; run stays READY",
@@ -333,7 +338,7 @@
   {
    "test": "V1 verify-release passes on an untouched release",
    "passed": true,
-   "evidence": "release 20261017-174734_46de2957 matches APPROVAL.json and the register (approve"
+   "evidence": "release 20261019-165039_46de2957 matches APPROVAL.json and the register (approve"
   },
   {
    "test": "V2 verify-release fails when a released file is modified",
@@ -351,6 +356,6 @@
    "evidence": "SHA-256 46de2957611b9534... before == after"
   }
  ],
- "results_sha256": "36cadcc54b7a430d92e206419714b07ec495a11f90f6ec5b29428a31897e6c66",
+ "results_sha256": "c9d7d433c85946ce944ac9cef4815663a867878e8ea929dfda0da3afb7e5640f",
  "source_sha256": "46de2957611b9534d77f43628ee22a45b11b094f7f2ae46fb690f1c3d690ea3c"
 }

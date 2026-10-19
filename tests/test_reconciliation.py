@@ -20,7 +20,11 @@ def test_source_unchanged():
 def test_selftest_record_current():
     import run_mis
     rec, problem = run_mis.load_selftest_record()
-    assert problem is None, problem
+    if problem:
+        files = {f: open(os.path.join(ROOT, f), 'rb').read() for f in run_mis.CODE_FILES}
+        hint = {f: (run_mis.sha256(os.path.join(ROOT, f))[:12], (rec or {}).get('code_files', {}).get(f, '?')[:12], b.count(b'\r\n')) for f, b in files.items()}
+        raise AssertionError(f'{problem}. (file: current sha12, recorded sha12, CRLF line count) = {hint}. A non-zero CRLF count means the checkout converted '
+                             'line endings (git core.autocrlf on Windows): re-checkout with the repository .gitattributes, or run "git add --renormalize ." and re-checkout the .py files.')
 
 def test_row_arithmetic_and_keys():
     x = _sheets(); s = x['Sales_Transactions']

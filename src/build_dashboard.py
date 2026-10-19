@@ -224,8 +224,8 @@ Budget variance is intentionally <b>not</b> calculated here. See <code>Budget_In
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument('--input', required=True); ap.add_argument('--out', default='outputs/v2'); a = ap.parse_args()
     d = compute(a.input); os.makedirs(a.out, exist_ok=True)
-    json.dump(d, open(os.path.join(a.out, 'dashboard_data.json'), 'w'), indent=1, sort_keys=True)
-    open(os.path.join(a.out, 'Nova_FPA_Dashboard.html'), 'w', encoding='utf-8').write(render(d))
+    json.dump(d, open(os.path.join(a.out, 'dashboard_data.json'), 'w', newline='\n'), indent=1, sort_keys=True)
+    open(os.path.join(a.out, 'Nova_FPA_Dashboard.html'), 'w', encoding='utf-8', newline='\n').write(render(d))   # LF on every OS (keeps output byte-identical)
     print(f'wrote {a.out}/Nova_FPA_Dashboard.html and dashboard_data.json (as of {d["as_of"]})')
 
 if __name__ == '__main__': main()
